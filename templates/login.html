@@ -1,25 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Login Form</h1>
-    <form action="/addUser" method="POST">
+    <h2>Login</h2>
+     <form action="/login" method="GET">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingName" name="name" placeholder="John">
-            <label for="floatingInput">First Name</label>
-        </div>
-        <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+            <input type="email" class="form-control" id="floatingInput" name="user_email" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" name="user_password" placeholder="Password">
             <label for="floatingPassword">Password</label>
         </div>
-        <input type="submit" value="Add User" class="btn btn-primary">
+        <input type="submit" value="Login" class="btn btn-primary">
     </form>
-    {% for user in users %}
-        <h4>
-            {{ user.name }}
-        </h4>
-    {% endfor %}
 {% endblock %}

@@ -25,9 +25,23 @@ def home():
     return render_template('landing.html')
 
 
-@app.route("/login")
+@app.route("/login", methods=['POST', 'GET'])
 def login():
-    return render_template('login.html')
+    if request.method == "GET":
+        user_email = request.form['user_email']
+        user_password = request.form['user_password']
+        user = Users(email=user_email, password=user_password)
+
+        # add to db
+        try:
+            user = Users.session.get(email=user_email)
+            if user.password == user_password:
+                return render_template('userHP.html')
+        except:
+            return "there was an error adding the user"
+    else:
+        users = Users.query.order_by(Users.created_at)
+        return render_template('userHP.html', users=users)
 
 
 @app.route("/logout")
