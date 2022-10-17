@@ -25,28 +25,39 @@ def home():
     return render_template('landing.html')
 
 
-@app.route("/login", methods=['POST', 'GET'])
+@app.route("/login")
 def login():
-    if request.method == "GET":
-        user_email = request.form['user_email']
-        user_password = request.form['user_password']
-        user = Users(email=user_email, password=user_password)
+   return render_template('login.html')
 
-        # add to db
-        try:
-            user = Users.session.get(email=user_email)
-            if user.password == user_password:
-                return render_template('userHP.html')
-        except:
-            return "there was an error adding the user"
-    else:
-        users = Users.query.order_by(Users.created_at)
-        return render_template('userHP.html', users=users)
 
+@app.route("/loginUser", methods=['POST', 'GET'])
+def loginUser():
+    user_email = request.form['email']
+    user_password = request.form['password']
+    try:
+        user = Users.query.get_or_404(email=user_email)
+        if user.password == user_password:
+            return render_template('userHP.html', user=user)
+        else:
+            return "Password do not match!!"
+    except:
+        return "User not found!!"
+
+
+# Update User
+# @app.route("/update/<int:_id>", methods=['POST', 'GET'])
+# def update(_id):
+#     user_to_update = Users.query.get_or_404(_id)
+#     return "User logged in"
 
 @app.route("/logout")
 def logout():
     return render_template('landing.html')
+
+
+@app.route("/createUser")
+def createUser():
+    return render_template('createUser.html')
 
 
 # add a user to the db

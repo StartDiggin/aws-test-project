@@ -2,14 +2,14 @@
 
 {% block content %}
     <h2>Login</h2>
-     <form action="/login" method="GET">
+     <form action="/loginUser" method="POST">
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" name="user_email" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <input type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com">
+            <label for="emailInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" name="user_password" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            <label for="inputPassword">Password</label>
         </div>
         <input type="submit" value="Login" class="btn btn-primary">
     </form>
