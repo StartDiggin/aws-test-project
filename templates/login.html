@@ -2,19 +2,24 @@
 
 {% block content %}
     <h1>Login Form</h1>
-    <form action="/addUser" method="post">
+    <form action="/addUser" method="POST">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingName" placeholder="John">
+            <input type="text" class="form-control" id="floatingName" name="name" placeholder="John">
             <label for="floatingInput">First Name</label>
         </div>
         <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
             <label for="floatingPassword">Password</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="submit" value="Add User" class="btn btn-primary">
     </form>
+    {% for user in users %}
+        <h4>
+            {{ user.name }}
+        </h4>
+    {% endfor %}
 {% endblock %}
