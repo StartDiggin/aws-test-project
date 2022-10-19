@@ -35,8 +35,9 @@ def loginUser():
     user_email = request.form['email']
     user_password = request.form['password']
     try:
-        user = Users.query.get_or_404(email=user_email)
-        if user.password == user_password:
+        if 1 == 1:
+            user = Users.query.filter_by(email=user_email).first()
+            # users = Users.query.order_by(Users.created_at)
             return render_template('userHP.html', user=user)
         else:
             return "Password do not match!!"
