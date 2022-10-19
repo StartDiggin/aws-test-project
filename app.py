@@ -34,13 +34,12 @@ def login():
 def loginUser():
     user_email = request.form['email']
     user_password = request.form['password']
+    user = Users.query.filter_by(email=user_email).first()
     try:
-        if 1 == 1:
-            user = Users.query.filter_by(email=user_email).first()
-            # users = Users.query.order_by(Users.created_at)
+        if user.password == user_password:
             return render_template('userHP.html', user=user)
         else:
-            return "Password do not match!!"
+            return "Passwords do not match!!"
     except:
         return "User not found!!"
 
