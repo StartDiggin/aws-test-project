@@ -7,6 +7,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
 db = SQLAlchemy(app)
 
+user_id = ""
+
 
 # users model
 class Users(db.Model):
@@ -22,12 +24,17 @@ class Users(db.Model):
 
 @app.route("/")
 def home():
-    return render_template('landing.html')
+    if user_id == "":
+        return render_template('landing.html')
+    else:
+        user = Users.query.get(user_id)
+        return render_template('userHP.html', user=user)
 
 
 @app.route("/login")
 def login():
-   return render_template('login.html')
+    print(user_id, "Login route user_id")
+    return render_template('login.html')
 
 
 @app.route("/loginUser", methods=['POST', 'GET'])
@@ -35,13 +42,16 @@ def loginUser():
     user_email = request.form['email']
     user_password = request.form['password']
     user = Users.query.filter_by(email=user_email).first()
+    # user_id = user.id
     try:
         if user.password == user_password:
+            user_id = user.id
+            print(user_id, "/loginUser route")
             return render_template('userHP.html', user=user)
         else:
             return "Passwords do not match!!"
     except:
-        return "User not found!!"
+        return redirect("/")
 
 
 # Update User
@@ -75,10 +85,10 @@ def addUser():
             db.session.commit()
             return redirect('/addUser')
         except:
-            return "there was an error adding the user"
+            return "There was an error adding the user!"
     else:
-        users = Users.query.order_by(Users.created_at)
-        return render_template('userHP.html', users=users)
+        allUsers = Users.query.order_by(Users.created_at)
+        return render_template('userHP.html', users=allUsers)
 
 
 if __name__ == '__name__':
