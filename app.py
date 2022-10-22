@@ -42,10 +42,10 @@ def loginUser():
     user_email = request.form['email']
     user_password = request.form['password']
     user = Users.query.filter_by(email=user_email).first()
-    # user_id = user.id
+    user_id = user.id
+
     try:
         if user.password == user_password:
-            user_id = user.id
             print(user_id, "/loginUser route")
             return render_template('userHP.html', user=user)
         else:
